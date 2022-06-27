@@ -4,7 +4,8 @@ import { Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import Login from "./Auth/Login";
 import { ar_loginUser } from "./Redux/Actions/AuthActions";
-import MyNavbar from "./Navbar/MyNavbar";
+import MyNavbar from "./AppLayout/MyNavbar";
+import AppLayout from "./AppLayout/AppLayout";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                 dispatch(ar_loginUser(data));
             }
         }
+		dispatch(ar_loginUser({ isAuthenticated: true, user: {} }));  // Uncomment this line for testing
         setLoading(false);
 	}
 	
@@ -58,8 +60,7 @@ function App() {
 							: authReducer.isAuthenticated 
 								? 
 								<>
-									<MyNavbar /> 
-									<Outlet />
+									<AppLayout />
 								</>
 								: <Navigate 
 									to="/login" 
@@ -70,7 +71,8 @@ function App() {
 				>
 
 					{/* All Authenticated Routes here ............ */}
-					<Route path="abc" element={<h1>Hii1</h1>} />
+					<Route path="abc" element={<h1>/abc Page</h1>} />
+					<Route path="*" element={<h1 style={{height: "100vh"}}>Home Page .... scroll inside</h1>} />
 				</Route>
 
 			</Routes>

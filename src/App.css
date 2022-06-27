@@ -1,52 +1,102 @@
+@import '~antd/dist/antd.css';
+/* @import '~antd/dist/antd.compact.css'; */
+
+
+:root {
+	--navbarHeight: 50px;
+	--sidebarOpenWidth: 200px;
+	--sidebarClosedWidth: 54px;
+	--sidebarFooterHeight: 25px;
+
+	--navbarBackground: #18232D;
+	--navbarColor: #fff;
+
+	--sidebarBackground: #18232D;
+	--sidebarColor: #fff;
+
+	--contentBackground: #fff;
+}
+
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.login-outer-div{
+	padding-top: 30px;
+	display: flex;
+	text-align: center;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
-.App {
-  text-align: center;
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #7a7a7a;
+    border-radius: 20px;
+    border: 4px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.ant-layout-header {
+	background-color: var(--navbarBackground);
+	color: var(--navbarColor);
+	padding: 0;
+	height: var(--navbarHeight);
+	line-height: var(--navbarHeight);
+	border-bottom: 1px solid #e8e8e8;
+	/* box-shadow: 0px -15px 10px -15px #111; */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.sidebar-component{
+	height: 100vh;
+	overflow-y: auto;
+	background-color: var(--sidebarBackground);
+	color: var(--sidebarColor);
+	/* border-right: 2px solid var(--sidebarColor); */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.sidebar-top-logo{
+	border-right: 1px solid var(--sidebarColor);
+	border-bottom: 1px solid var(--sidebarColor);
+	height: var(--navbarHeight);
+	line-height: var(--navbarHeight);
 }
 
-.App-link {
-  color: #61dafb;
+.sidebar-content {
+	height: calc(100vh - var(--navbarHeight) - var(--sidebarFooterHeight) - 5px);
+	overflow: auto;
+	/* padding-bottom: 100px; */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sidebar-footer {
+	border-top: 1px solid #e8e8e8;
+	height: var(--sidebarFooterHeight);
+	line-height: var(--sidebarFooterHeight);
+
+	/* text-align: center; */
+}
+
+.main-content-div{
+	width: 100%;
+	padding: 0px 3px;
+	background-color: var(--contentBackground);
+	height: calc(100vh - var(--navbarHeight));
+	overflow: auto;
 }
