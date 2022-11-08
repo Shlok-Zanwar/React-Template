@@ -3,7 +3,7 @@ import React from 'react'
 import MyNavbar from './MyNavbar';
 import MySider from './MySider';
 
-export default function AppLayout() {
+export default function AppLayout({menuItems, globalSearchItems}) {
     const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false);
 
     return (
@@ -11,11 +11,13 @@ export default function AppLayout() {
             <MySider 
                 collapsed={sidebarCollapsed}
                 onCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+                menuItems={menuItems}
             />
             <Layout>
                 <MyNavbar
                     collapsed={sidebarCollapsed}
-                    onCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+                    setCollapse={setSidebarCollapsed}
+                    globalSearchItems={globalSearchItems}
                 />
             </Layout>
         </Layout>

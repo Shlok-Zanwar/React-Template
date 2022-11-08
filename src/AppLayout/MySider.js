@@ -1,31 +1,15 @@
-import React from "react";
-import { Breadcrumb, Layout, Menu } from "antd";
-import { FileOutlined, PieChartOutlined, UserOutlined, DesktopOutlined, TeamOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
-function getItem(label, key, icon, children) {
-    return {
-        key,
-        icon,
-        children,
-        label,
-    };
-}
+import React, { useEffect, useState } from "react";
+import { Breadcrumb, Layout, Menu, Divider, Input } from "antd";
+import { useSelector, useDispatch } from "react-redux";
 
-const items = [
-    getItem("Option 1", "1", <PieChartOutlined />),
-    getItem("Option 2", "2", <DesktopOutlined />),
-    getItem("User", "sub1", <UserOutlined />, [getItem("Tom", "3"), getItem("Bill", "4"), getItem("Alex", "5")]),
-    getItem("User", "sub1", <UserOutlined />, [getItem("Tom", "3"), getItem("Bill", "4"), getItem("Alex", "5")]),
-    getItem("User", "sub1", <UserOutlined />, [getItem("Tom", "3"), getItem("Bill", "4"), getItem("Alex", "5")]),
-    getItem("User", "sub1", <UserOutlined />, [getItem("Tom", "3"), getItem("Bill", "4"), getItem("Alex", "5")]),
-    getItem("User", "sub1", <UserOutlined />, [getItem("Tom", "3"), getItem("Bill", "4"), getItem("Alex", "5")]),
-    getItem("User", "sub1", <UserOutlined />, [getItem("Tom", "3"), getItem("Bill", "4"), getItem("Alex", "5")]),
-    getItem("User", "sub1", <UserOutlined />, [getItem("Tom", "3"), getItem("Bill", "4"), getItem("Alex", "5")]),
-    getItem("Team", "sub1", <TeamOutlined />, [getItem("Team 1", "6"), getItem("Team 2", "8")]),
-    getItem("Files", "9", <FileOutlined />),
-];
+import { FiUser } from "react-icons/fi";
+import { MdOutlineClear } from "react-icons/md";
+import { Helmet } from "react-helmet";
 
-export default function MySider({ collapsed, onCollapse }) {
+export default function MySider({ collapsed, onCollapse, menuItems=[] }) {
+	const authReducer = useSelector(state => state.authReducer);
+
     return (
         <Layout.Sider 
             // style={{ background: "red", height: "100vh", overflow: 'auto' }} 
@@ -36,26 +20,60 @@ export default function MySider({ collapsed, onCollapse }) {
             onCollapse={onCollapse}
             // collapsible={true}
         >
-            <div className="sidebar-top-logo">
-                {
-                    collapsed 
-                    ? <MenuUnfoldOutlined 
-                        style={{marginLeft: '10px', fontSize: '20px'}} 
-                        onClick={() => onCollapse(!collapsed)}
-                    />
-                    : <>Sidebar Header</>
+            <div className="sidebar-top-logo" style={collapsed ? {textAlign: 'center'} : {textAlign: 'center'} }>
+                <FiUser style={{fontSize: '25px'}} />
+                {!collapsed && 
+                    <>{authReducer?.user?.username}</>
                 }
             </div>
+           
             <div className="sidebar-content">
+                <Helmet>
+                    <style>
+                        {`
+                            .ant-menu-item, .ant-menu-submenu-title, .ant-menu-submenu-arrow {
+                                margin: 0px !important;
+                                border-bottom: 1px solid var(--sidebarBorder) !important;
+                            }
+
+                            .ant-menu-item-icon {
+                                font-size: 1.2rem !important;
+                            }
+
+                            {/* Remove the colour change on Hover */}
+                            {/* .ant-menu-item:hover, .ant-menu-submenu-title:hover, .ant-menu-submenu-arrow:hover {
+                                color: var(--sidebarText) !important;
+                            } */}
+
+
+                        `}
+                    </style>
+                </Helmet>
+
+                {/* TODO: Fix menu is flickering when the sidebar is collapsed and expanded */}
                 <Menu 
-                    theme="dark"
-                    defaultSelectedKeys={["1"]} 
-                    mode="inline" 
-                    items={items} 
+                    style={{
+                        background: "var(--sidebarBackground)", 
+                        color: "var(--sidebarTextColor)", 
+                        border: 'none', 
+                        padding: '0px', 
+                        width: '100%',
+                        fontSize: '16px',
+                        fontWeight: '500',
+                    }}
+                    inlineIndent={12}
+                    theme="light"
+                    // openKeys={openKeys}
+                    // onOpenChange={(keys) => setOpenKeys(keys)}
+                    // defaultSelectedKeys={["masters"]} 
+                    selectable={false}
+                    mode={"inline"} 
+                    items={menuItems} 
                 />
             </div>
             <div className="sidebar-footer">
-                Sidebar
+                {collapsed ? "" : "Version : "}
+                {process.env.REACT_APP_VERSION || "0.5.1"}
             </div>
         </Layout.Sider>
     );
